@@ -74,18 +74,18 @@ Web Interface (Flask)
   <tr>
     <td align="center">
       <b>😊 Emotion Detection</b><br>
-      <img src="Output/Image1.jpg" width="300"/><br><br>
+      <img src="./Output/Image1.jpg" width="300"/><br><br>
       
       <b>🎧 Music Recommendation</b><br>
-      <img src="Output/Image2.jpg" width="300"/>
+      <img src="./Output/Image2.jpg" width="300"/>
     </td>
 
     <td align="center">
       <b>😊 Emotion Detection</b><br>
-      <img src="Output/Image3.jpg" width="300"/><br><br>
+      <img src="./Output/Image3.jpg" width="300"/><br><br>
       
       <b>🎧 Music Recommendation</b><br>
-      <img src="Output/Image4.jpg" width="300"/>
+      <img src="./Output/Image4.jpg" width="300"/>
     </td>
   </tr>
 </table>
