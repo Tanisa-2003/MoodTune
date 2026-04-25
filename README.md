@@ -43,6 +43,7 @@ MoodTune is an AI-based web application that detects a user's facial emotion usi
 ```bash
 git clone https://github.com/Tanisa-2003/MoodTune.git
 cd MoodTune
+```
 
 ### 2. Install dependencies
 pip install -r requirements.txt
@@ -52,6 +53,8 @@ new_resnet_model.h5
 
 ### 4. Run the application
 python app.py
+
+---
 
 ## 🔄 Workflow
 Input (Webcam/Image)
@@ -67,6 +70,8 @@ Emotion Output
 Music Recommendation
         ↓
 Web Interface (Flask)
+
+---
 
 ## 📊 Output Screenshots
 
