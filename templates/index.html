@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion Music App</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            text-align: center;
+        }
+
+        /* DETECTION SCREEN */
+        #detectionScreen {
+            padding-top: 20px;
+        }
+
+        img {
+            width: 50%;
+            border-radius: 15px;
+            border: 3px solid #1db954;
+        }
+
+        #emotion {
+            margin-top: 15px;
+            font-size: 24px;
+        }
+
+        #confidence {
+            color: #1db954;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background: #1db954;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* SONG SCREEN */
+        #songScreen {
+            display: none;
+            padding: 20px;
+        }
+
+        .songs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🎥 DETECTION SCREEN -->
+<div id="detectionScreen">
+    <h1>🎥 Emotion Detection</h1>
+
+    <img src="/video">
+
+    <h2 id="emotion">Emotion: Detecting...</h2>
+    <h3 id="confidence">Confidence: 0%</h3>
+
+    <button onclick="showSongs()">🎵 Get Songs</button>
+</div>
+
+
+<!-- 🎵 SONG SCREEN -->
+<div id="songScreen">
+    <h1>🎵 Recommended Songs</h1>
+    <button onclick="goBack()">⬅ Back</button>
+
+    <div class="songs" id="songsContainer"></div>
+</div>
+
+
+<script>
+let currentEmotion = "neutral";
+
+// 🔁 Detect emotion continuously
+function updateEmotion() {
+    fetch('/get_emotion')
+    .then(res => res.json())
+    .then(data => {
+        currentEmotion = data.emotion;
+
+        document.getElementById("emotion").innerText =
+            "Emotion: " + data.emotion;
+
+        document.getElementById("confidence").innerText =
+            "Confidence: " + data.confidence + "%";
+    });
+}
+
+// 🎵 Show songs (HIDE detection)
+function showSongs() {
+
+    // hide detection
+    document.getElementById("detectionScreen").style.display = "none";
+
+    // show songs
+    document.getElementById("songScreen").style.display = "block";
+
+    fetch('/get_songs?emotion=' + currentEmotion)
+    .then(res => res.json())
+    .then(data => {
+        let container = document.getElementById("songsContainer");
+        container.innerHTML = "";
+
+        data.forEach(song => {
+            container.innerHTML += `
+                <div class="card">
+                    <iframe src="https://www.youtube.com/embed/${song.YouTubeID}" allowfullscreen></iframe>
+                    <p>${song.Song}</p>
+                    <small>${song.Singer}</small>
+                </div>
+            `;
+        });
+    });
+}
+
+// 🔙 Back to detection
+function goBack() {
+    document.getElementById("songScreen").style.display = "none";
+    document.getElementById("detectionScreen").style.display = "block";
+}
+
+// start detection loop
+setInterval(updateEmotion, 2000);
+</script>
+
+</body>
+</html>
