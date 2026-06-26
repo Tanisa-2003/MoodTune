@@ -26,10 +26,8 @@ frame_count = 0
 # ================= SONG RECOMMENDER =================
 def recommend_songs(emotion):
     emotion = emotion.lower()
-
     # normalize dataset
     df['Emotion'] = df['Emotion'].str.lower()
-
     filtered = df[df['Emotion'] == emotion]
 
     if len(filtered) == 0:
